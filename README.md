@@ -4,3 +4,10 @@ Labs and demos for courses for GCP Training (http://cloud.google.com/training).
 
 ## Lab App Dev - Developing a Backend Service: Java
 [training-data-analyst/courses/developingapps/v1.3/java/pubsub-languageapi-spanner/](https://github.com/klebermagno/training-data-analyst/tree/master/courses/developingapps/v1.3/java/pubsub-languageapi-spanner)
+
+
+## OpenAPI
+
+OpenAPI is a open patern to specify an API. You can use a YAML file to describle and documentate it.
+
+(https://cloud.google.com/api-gateway/docs/openapi-overview) 

@@ -23,7 +23,7 @@
 	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
-	<name>appdev</name>
+	<name>0-appdev-quiz</name>
 	<description>Quiz Application</description>
 
 	<parent>
