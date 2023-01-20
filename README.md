@@ -11,3 +11,7 @@ Labs and demos for courses for GCP Training (http://cloud.google.com/training).
 OpenAPI is a open patern to specify an API. You can use a YAML file to describle and documentate it.
 
 (https://cloud.google.com/api-gateway/docs/openapi-overview) 
+
+
+## Cloud Foundation Toolkit 
+(https://github.com/terraform-google-modules/terraform-example-foundation)
