@@ -15,3 +15,29 @@ OpenAPI is a open patern to specify an API. You can use a YAML file to describle
 
 ## Cloud Foundation Toolkit 
 (https://github.com/terraform-google-modules/terraform-example-foundation)
+
+## Google Cloud Toolkit CLI
+
+From Cloud Shell, enable the Cloud Run API:
+```
+gcloud services enable run.googleapis.com
+```
+
+Set the compute region:
+
+```
+gcloud config set compute/region us-central1
+```
+
+Use the one-step gcloud command to deploy your container:
+```
+gcloud beta run deploy --source .
+```
+
+## Buildpack
+
+Buildpack build images to run in google envoriment or localy.
+
+```
+pack build --builder=gcr.io/buildpacks/builder sample-java-mvn
+
