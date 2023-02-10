@@ -91,6 +91,68 @@ Buildpack build images to run in google envoriment or localy.
 pack build --builder=gcr.io/buildpacks/builder sample-java-mvn
 ```
 
+## Loadbalancer
+
+Reserve a external IP
+```
+gcloud compute addresses create example-ip \
+    --ip-version=IPV4 \
+    --global
+```
+
+Display IP
+```
+gcloud compute addresses describe example-ip \
+    --format="get(address)" \
+    --global
+```
+
+Load balancers use a serverless Network Endpoint Group (NEG) backend to direct requests to a serverless Cloud Run service.
+So, let's first create our serverless NEG for our serverless Python app created earlier in this lab.
+
+To create a serverless NEG with a Cloud Run service, enter the following in Cloud Shell:
+```
+gcloud compute network-endpoint-groups create myneg \
+   --region=$LOCATION \
+   --network-endpoint-type=serverless  \
+   --cloud-run-service=helloworld
+```
+
+Create a loadbalance service 
+```
+gcloud compute backend-services create mybackendservice \
+    --global
+```
+And then add the serverless NEG as a backend to this backend service:
+```
+gcloud compute backend-services add-backend mybackendservice \
+    --global \
+    --network-endpoint-group=myneg \
+    --network-endpoint-group-region=$LOCATION
+```
+
+Finally, create a URL map to route incoming requests to the backend service:
+```
+gcloud compute url-maps create myurlmap \
+    --default-service mybackendservice
+```
+
+If you had more than one backend service, you could use host rules to direct requests to different services based on the host name, or you could set up path matchers to direct requests to different services based on the request path. None of this is necessary here because we have only created one backend service for this lab.
+
+Now, create a target HTTP(S) proxy to route requests to your URL map:
+```
+gcloud compute target-http-proxies create mytargetproxy \
+    --url-map=myurlmap
+```
+Create a global forwarding rule to route incoming requests to the proxy:
+```
+gcloud compute forwarding-rules create myforwardingrule \
+    --address=example-ip \
+    --target-http-proxy=mytargetproxy \
+    --global \
+    --ports=80
+```    
+    
 ## Deployment strategies
 
 * Recreate: Version A is terminated then version B is rolled out.
