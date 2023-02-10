@@ -152,7 +152,68 @@ gcloud compute forwarding-rules create myforwardingrule \
     --global \
     --ports=80
 ```    
-    
+### Configuring Egress from a Static Outbound IP Address [APPRUN]
+
+Create a subnetwork called mysubnet with a range of 192.168.0.0/28 (CIDR format is required for this), in the region us-central1, to be used as the VPC for your Serverless VPC Access connector. Use the command below, which will create this subnetwork in the project's default network (note also that subnets used for VPC connectors must have a netmask of 28, or you will get an error later in the process):
+```
+gcloud compute networks subnets create mysubnet \
+--range=192.168.0.0/28 --network=default --region=$LOCATION
+``` 
+
+Create a serverless VPC Access connector
+
+To route your Cloud Run service's outbound traffic to a VPC network, you first need to set up a Serverless VPC Access connector.
+
+Create a Serverless VPC Access connector named myconnector with your previously created subnetwork named mysubnet using the following command:
+```
+gcloud compute networks vpc-access connectors create myconnector \
+  --region=$LOCATION \
+  --subnet-project=$GOOGLE_CLOUD_PROJECT \
+  --subnet=mysubnet
+```
+You may be asked to enable the vpcaccess.googleapis.com on your project. If so, enter y and wait for the process to complete before proceeding. 
+
+Configure network address translation (NAT)
+
+To route outbound requests to external endpoints through a static IP (which is the main goal of this lab), you must first configure a Cloud NAT gateway.
+
+Create a new Cloud Router to program your NAT gateway:
+```
+gcloud compute routers create myrouter \
+  --network=default \
+  --region=$LOCATION
+```
+Next, reserve a static IP address using the command below, where myoriginip is the name being assigned to your IP address resource.
+A reserved IP address resource retains the underlying IP address when the resource it is associated with is deleted and re-created. Using the same region as your Cloud NAT router will help to minimize latency and network costs.
+```
+gcloud compute addresses create myoriginip --region=$LOCATION
+Copied!
+content_copy
+To route outbound requests to external endpoints through a static IP, you must configure a Cloud NAT gateway.
+```
+Bring all of the resources you've just made together to create a Cloud NAT gateway named mynat. Use the command below to configure your router to route the traffic originating from the VPC network:
+```
+gcloud compute routers nats create mynat \
+  --router=myrouter \
+  --region=$LOCATION \
+  --nat-custom-subnet-ip-ranges=mysubnet \
+  --nat-external-ip-pool=myoriginip
+ ```
+ 
+ Route Cloud Run traffic through the VPC network
+
+After NAT has been configured, you will deploy your Cloud Run service with the Serverless VPC Access connector and set the VPC egress to route all traffic through the VPC network:
+```
+gcloud run deploy sample-go \
+   --image=gcr.io/$GOOGLE_CLOUD_PROJECT/sample-go \
+   --vpc-connector=myconnector \
+   --vpc-egress=all-traffic
+```
+You may be asked to enable run.googleapis.com for your project. If so, respond y and wait for the API to enable.
+
+When asked for a region, choose us-central1 as the location "us-central1" is created in the environment variable and also choose y to allow unauthenticated invocations. It will take a few minutes for the process to complete.
+
+
 ## Deployment strategies
 
 * Recreate: Version A is terminated then version B is rolled out.
