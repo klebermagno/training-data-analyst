@@ -59,7 +59,7 @@ Grant permission to create token
 gcloud projects add-iam-policy-binding $GOOGLE_CLOUD_PROJECT \
    --member=serviceAccount:service-$PROJECT_NUMBER@gcp-sa-pubsub.iam.gserviceaccount.com \
    --role=roles/iam.serviceAccountTokenCreator
-
+```
 
 ## Cloud Pub/Sub
 
@@ -73,6 +73,7 @@ Create a subscription:
 ORDER_SERVICE_URL=$(gcloud run services describe order-service \
    --region $LOCATION \
    --format="value(status.address.url)")
+```
 ```
 gcloud pubsub subscriptions create order-service-sub \
    --topic ORDER_PLACED \
