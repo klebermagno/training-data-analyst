@@ -225,13 +225,35 @@ When asked for a region, choose us-central1 as the location "us-central1" is cre
 
 ## Kubernets
 
-# Commands
+### Commands
+
+In Cloud Shell, configure access to your cluster for the kubectl command-line tool, using the following command:
 
 ```
-$
+gcloud container clusters get-credentials $my_cluster --zone $my_zone
 ```
 
-# deployment manifest
+Scale
+```
+kubectl scale --replicas=3 deployment nginx-deployment
+```
+
+To scalling canarian you can just scale to zero replicar the old container.
+```
+kubectl scale --replicas=0 deployment nginx-deployment
+```
+
+Get deploymenrts
+
+```
+kubectl get deployments
+```
+Get the history
+```
+kubectl rollout history deployment nginx-deployment
+```
+
+### deployment manifest
 
 ```
 apiVersion: apps/v1
@@ -257,4 +279,26 @@ spec:
         - containerPort: 80
 ```
 
+### To deploy your manifest, execute the following command:
+
+```
+kubectl apply -f ./nginx-deployment.yaml
+```
+
+
+### Rollout & Rollback
+
+* Rollout:  A feature rollout enables you to safely deliver a new feature to your users by controlling who sees it, and when.
+* Rollback: Back to the previous version.
+
+### Rollout
+You can set rollout by set command or update yaml
+
+```
+kubectl set image deployment.v1.apps/nginx-deployment nginx=nginx:1.9.1 --record
+```
+
+### Storage
+ 
+ [/ak8s/v1.1](https://github.com/klebermagno/training-data-analyst/tree/master/courses/ak8s/v1.1)
 
