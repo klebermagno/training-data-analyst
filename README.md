@@ -225,6 +225,13 @@ When asked for a region, choose us-central1 as the location "us-central1" is cre
 
 ## Kubernets
 
+### SSH
+
+
+```
+gcloud compute ssh ledgermonolith-service --tunnel-through-iap --zone=us-central1-b
+```
+
 ### Commands
 
 In Cloud Shell, configure access to your cluster for the kubectl command-line tool, using the following command:
