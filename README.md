@@ -213,6 +213,52 @@ You may be asked to enable run.googleapis.com for your project. If so, respond y
 
 When asked for a region, choose us-central1 as the location "us-central1" is created in the environment variable and also choose y to allow unauthenticated invocations. It will take a few minutes for the process to complete.
 
+### Trafic migration cloud run. 25% each node
+
+Traffic migration - deploy a new version
+
+When splitting traffic between two or more revisions, a comma separated list can be used. The list represents the revisions deployed.
+
+Deploy a new tagged revision (test3) with redirection of traffic:
+```
+gcloud run deploy product-service \
+  --image gcr.io/qwiklabs-resources/product-status:0.0.3 \
+  --no-traffic \
+  --tag test3 \
+  --region=$LOCATION \
+  --allow-unauthenticated
+ ```
+Deploy a new tagged revision (test4) with redirection of traffic:
+```
+gcloud run deploy product-service \
+  --image gcr.io/qwiklabs-resources/product-status:0.0.4 \
+  --no-traffic \
+  --tag test4 \
+  --region=$LOCATION \
+  --allow-unauthenticated
+```
+
+Output a list of the revisions deployed:
+```
+gcloud run services describe product-service \
+  --region=$LOCATION \
+  --format='value(status.traffic.revisionName)'
+```
+Create an environment variable for the available revisionNames:
+```
+LIST=$(gcloud run services describe product-service --platform=managed --region=$LOCATION --format='value[delimiter="=25,"](status.traffic.revisionName)')"=25"
+```
+Split traffic between the four services using the LIST environment variable:
+``` 
+gcloud run services update-traffic product-service \
+  --to-revisions $LIST --region=$LOCATION
+```
+Observe the name of the Tagged Revision in the command output.
+
+Test the endpoint is distributing traffic:
+```
+for i in {1..10}; do curl $TEST1_PRODUCT_SERVICE_URL/help -w "\n"; done
+```
 
 ## Deployment strategies
 
