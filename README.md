@@ -344,6 +344,12 @@ spec:
         - containerPort: 80
 ```
 
+## Kind:
+
+* Deployments: are usually used for stateless applications. you can save the state of deployment by attaching a Persistent Volume to it and make it stateful, but all the pods of a deployment will be sharing the same Volume and data across all of them will be same. 
+* StatefulSets:  is a Kubernetes resource used to manage stateful applications. . It manages the deployment and scaling of a set of Pods, and provides guarantee about the ordering and uniqueness of these Pods. Every replica of a stateful set will have its own state, and each of the pods will be creating its own PVC(Persistent Volume Claim). So a statefulset with 3 replicas will create 3 pods, each having its own Volume, so total 3 PVCs.
+* DaemonSets:  is a controller that ensures that the pod runs on all the nodes of the cluster. If a node is added/removed from a cluster, DaemonSet automatically adds/deletes the pod.
+* Jobs: 
 ### To deploy your manifest, execute the following command:
 
 ```
