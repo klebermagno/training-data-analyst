@@ -271,15 +271,17 @@ for i in {1..10}; do curl $TEST1_PRODUCT_SERVICE_URL/help -w "\n"; done
 
 ## Kubernets
 
-``` kubernets.ymal
- apiVersion: apps/v1 kind: Pod metadata:
+``` (kubernets.ymal)
+apiVersion: apps/v1 
+kind: Pod 
+metadata:
   name: nginx
   labels:
-app: nginx spec:
+    app: nginx 
+spec:
 containers:
 - name: nginx
     image: nginx:latest
-
 ```
 ### SSH
 
