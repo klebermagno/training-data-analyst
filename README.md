@@ -152,7 +152,7 @@ gcloud compute forwarding-rules create myforwardingrule \
     --global \
     --ports=80
 ```    
-### Configuring Egress from a Static Outbound IP Address [APPRUN]
+### Configuring Engress from a Static Outbound IP Address [APPRUN]
 
 Create a subnetwork called mysubnet with a range of 192.168.0.0/28 (CIDR format is required for this), in the region us-central1, to be used as the VPC for your Serverless VPC Access connector. Use the command below, which will create this subnetwork in the project's default network (note also that subnets used for VPC connectors must have a netmask of 28, or you will get an error later in the process):
 ```
@@ -271,6 +271,17 @@ for i in {1..10}; do curl $TEST1_PRODUCT_SERVICE_URL/help -w "\n"; done
 
 ## Kubernets
 
+
+## Security 
+On Google Kubernetes Engine (GKE) is recommended to use *Workload Identity*. Use gcloud to bind the Google service accounts and the Kubernetes service accounts using roles/iam.workloadIdentityUser.
+
+Not use service account attached to the GKE node. While it could work, all the services are using the same service account, there is no separation of permissions, and no detailed logging.
+
+### Workload Identity
+Workload Identity is a feature in Google Kubernetes Engine (GKE) that allows you to securely authenticate to Google Cloud services from within your GKE cluster without needing to manage and rotate service account keys.
+With Workload Identity, you can configure your GKE cluster to use Kubernetes service account credentials to authenticate to Google Cloud services, instead of using service account keys. This provides an extra layer of security and simplifies the management of credentials.
+
+### kubernets.ymal
 ``` (kubernets.ymal)
 apiVersion: apps/v1 
 kind: Pod 
