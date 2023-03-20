@@ -380,7 +380,30 @@ You can set rollout by set command or update yaml
 kubectl set image deployment.v1.apps/nginx-deployment nginx=nginx:1.9.1 --record
 ```
 
+### Auto-scaling
+
+* Horizontal scaling in cloud computing means adding additional instances instead of moving to a larger instance size.
+* Vertical scaling refers to adding more or faster CPUs, memory, or I/O resources to an existing server, or replacing one server with a more powerful server.
+
+
 ### Storage
  
  [/ak8s/v1.1](https://github.com/klebermagno/training-data-analyst/tree/master/courses/ak8s/v1.1)
 
+
+# Cloud Endpoints 
+
+Cloud Endpoints is a service offered by Google Cloud Platform (GCP) that allows you to create, deploy, protect, and monitor APIs for your applications. It provides a scalable and secure way to build APIs that can be accessed by external applications and developers.
+
+With Cloud Endpoints, you can define and deploy APIs using the OpenAPI specification, also known as Swagger. You can use this specification to define the API's methods, parameters, request and response formats, authentication and authorization mechanisms, and other metadata.
+
+Cloud Endpoints also provides various security features to protect your APIs, such as API key validation, JWT authentication, and OAuth 2.0 authorization. It also integrates with Google Cloud Identity and Access Management (IAM), allowing you to control access to your APIs at a granular level.
+
+In addition, Cloud Endpoints provides a monitoring dashboard that allows you to track API usage, performance, and errors. You can use this dashboard to identify and troubleshoot issues in your APIs and to gain insights into the usage patterns of your API consumers.
+
+Overall, Cloud Endpoints is a powerful and flexible service that enables you to create and manage APIs for your applications in a scalable and secure manner. It allows you to focus on building your applications' business logic while providing the infrastructure for your APIs.
+
+# Identity-Aware Proxy
+
+Provide only autentication.
+HTTP Status Codes
