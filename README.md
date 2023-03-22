@@ -407,3 +407,6 @@ Overall, Cloud Endpoints is a powerful and flexible service that enables you to 
 
 Provide only autentication.
 HTTP Status Codes
+
+### SRE
+SRE is the management of availability, latency, performance, efficiency, change management, monitoring, emergency response, and capacity planning regarding the software development process. GCP has a set of tools called APPLICATION PERFORMANCE MANAGEMENT: Stackdriver Trace, Stackdriver Debugger, and Stackdriver Profiles.
