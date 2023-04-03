@@ -400,6 +400,10 @@ kubectl set image deployment.v1.apps/nginx-deployment nginx=nginx:1.9.1 --record
  
  [/ak8s/v1.1](https://github.com/klebermagno/training-data-analyst/tree/master/courses/ak8s/v1.1)
 
+gsutil is a command-line tool used to manage Cloud Storage
+
+bq is a command-line tool for BigQuery
+
 
 # Cloud Endpoints 
 
