@@ -63,6 +63,16 @@ gcloud projects add-iam-policy-binding $GOOGLE_CLOUD_PROJECT \
 
 ## Cloud Pub/Sub
 
+
+In Google Cloud Pub/Sub, push and pull are two different mechanisms for delivering messages to subscribers.
+
+**Push** delivery is a mechanism where the Pub/Sub service delivers messages to an **HTTP/HTTPS endpoint** that is specified by the subscriber. The endpoint could be hosted on a Google Cloud service, such as Cloud Functions or App Engine, or on an external service outside of Google Cloud. With push delivery, subscribers do not need to actively poll the Pub/Sub service for new messages. Instead, the Pub/Sub service pushes the messages to the subscriber's endpoint as soon as they are available. This can lead to lower latency and more efficient use of resources.
+
+**Pull** delivery is a mechanism where subscribers actively poll the Pub/Sub service for new messages. In pull delivery, the **subscriber must periodically send a request to the Pub/Sub service to check** if there are any new messages available. If there are new messages, the subscriber can then retrieve them from the service. Pull delivery is useful for scenarios where the subscriber cannot receive incoming traffic or when the subscriber needs more control over when and how to retrieve messages.
+
+In summary, push delivery is more suitable for real-time or near real-time applications where low latency is important, while pull delivery is better for scenarios where a subscriber needs more control over message retrieval and processing.
+
+
 Create a topic: 
 ```
 gcloud pubsub topics create ORDER_PLACED
