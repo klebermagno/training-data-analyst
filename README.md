@@ -424,3 +424,11 @@ HTTP Status Codes
 
 ### SRE
 SRE is the management of availability, latency, performance, efficiency, change management, monitoring, emergency response, and capacity planning regarding the software development process. GCP has a set of tools called APPLICATION PERFORMANCE MANAGEMENT: Stackdriver Trace, Stackdriver Debugger, and Stackdriver Profiles.
+
+### Filestore
+
+### Big Table
+NoSQL  wide-column database optimized for heavy reads and writes. On the other hand,
+
+### Big Query
+ BigQuery is an enterprise data warehouse for large amounts of relational structured data
