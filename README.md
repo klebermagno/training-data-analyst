@@ -425,6 +425,11 @@ HTTP Status Codes
 ### SRE
 SRE is the management of availability, latency, performance, efficiency, change management, monitoring, emergency response, and capacity planning regarding the software development process. GCP has a set of tools called APPLICATION PERFORMANCE MANAGEMENT: Stackdriver Trace, Stackdriver Debugger, and Stackdriver Profiles.
 
+### Datastore
+
+ Hierarchically structured space similar to the directory structure of a file system
+ Transactopnmal
+ 
 ### Filestore
 
 ### Big Table
@@ -432,3 +437,41 @@ NoSQL  wide-column database optimized for heavy reads and writes. On the other h
 
 ### Big Query
  BigQuery is an enterprise data warehouse for large amounts of relational structured data
+You can set a Time ti live Table expiration time.
+Is ACID Atomic, Consistent, Isolated, Durable.
+
+### Google Storage
+
+You can't change after select regional you can't change to multiregional ou inverse.
+
+### Efficiency in processing large amounts of data
+
+#### Cache-Aside
+Load data on demand into a cache from a data store. This can improve performance and also helps to maintain consistency between data held in the cache and data in the underlying data store.
+If an application updates information, it can follow the write-through strategy by making the modification to the data store, and by invalidating the corresponding item in the cache.
+
+#### Materialized View
+Prepopulated views over the data in one or more tables when the data isn't ideally structured for required query operations. This can improve querying and data extraction performance.
+
+#### Sharding
+Split Tables  into a set of horizontal partitions or shards. This improves scalability.
+
+### Signed URLK
+ give time-limited access to a specific Cloud Storage resource
+ 
+ ### Spinnaker
+ Spinnaker is an open source, multi-cloud continuous delivery platform for releasing software changes.
+
+* Automate deployment pipelines that run integration and system tests, spin up and down server groups, and monitor your rollouts via git events, Jenkins, Travis CI, Docker, CRON, or other Spinnaker pipelines.
+
+* Deploy across multiple cloud providers including AWS EC2, Kubernetes, Google Compute Engine, Google Kubernetes Engine, Google App Engine, Microsoft Azure, Openstack, Cloud Foundry, and Oracle Cloud Infrastructure
+
+* Create and deploy immutable images
+
+### Stackdriver Logs
+
+ log sink to copy log.
+ 
+* Stackdriver Profiler is a statistical, low-overhead profiler that continuously gathers CPU usage and memory-allocation information from your production applications. So it meets our requirements because it helps to identify the parts of the application consuming the most resources and the performance characteristics of the code.
+
+* Stackdriver Trace is a tracing system that collects latency data and displays it in near real-time in the Google Cloud Platform Console.
