@@ -404,6 +404,17 @@ gsutil is a command-line tool used to manage Cloud Storage
 
 bq is a command-line tool for BigQuery
 
+# Anthos
+
+Anthos is a hybrid and multi-cloud application platform offered by Google Cloud Platform (GCP). Anthos provides a consistent platform for deploying and managing containerized applications across multiple clouds, including GCP, other public clouds, and on-premises data centers.
+
+Anthos includes various tools and services that enable you to build, deploy, and manage your applications in a consistent manner, regardless of the underlying infrastructure. Some of the key components of Anthos include:
+
+Google Kubernetes Engine (GKE): Anthos is built on top of GKE, which is a fully managed Kubernetes service provided by GCP. GKE provides a consistent, secure, and scalable platform for deploying and managing containerized applications.
+Anthos Config Management: This tool enables you to manage and enforce policies across multiple Kubernetes clusters and across multiple clouds, ensuring consistency in your application environment.
+Anthos Service Mesh: This tool provides traffic management, observability, and security for microservices-based applications running on Kubernetes.
+Cloud Run for Anthos: This service allows you to deploy serverless workloads on Anthos, providing a fully managed platform for running stateless containers without worrying about the underlying infrastructure.
+Anthos enables you to deploy and manage your applications in a consistent manner across multiple clouds, while also providing a high degree of security, scalability, and flexibility.
 
 # Cloud Endpoints 
 
@@ -475,3 +486,140 @@ Split Tables  into a set of horizontal partitions or shards. This improves scala
 * Stackdriver Profiler is a statistical, low-overhead profiler that continuously gathers CPU usage and memory-allocation information from your production applications. So it meets our requirements because it helps to identify the parts of the application consuming the most resources and the performance characteristics of the code.
 
 * Stackdriver Trace is a tracing system that collects latency data and displays it in near real-time in the Google Cloud Platform Console.
+
+
+### Anthos migration tool
+
+Scaling
+Patching
+Upgrades
+Flexibility
+Virtualization
+OS config
+Physical operation
+Hardware
+
+Supported sources: VMware, AWS, Azure, Compute Engine
+Supported Workloads OS types: Linux and Windows distributions
+
+Application architectures:
+● Web/application servers
+● Stateless web frontends
+● Business logic middleware (such as Tomcat, J2EE, COTS)
+● Multi-VM, multi-tier stacks (such as LAMP, WordPress)
+● Small/medium-sized databases (such as MySQL, PostgreSQL)
+
+Badfit 
+●  VMs with special kernel drivers (such as kernel mode NFS)
+● Dependencies on specific hardware
+● Software with licenses tied to certain hardware ID registration
+● Always-on database VMs that don’t fit Cloud SQL
+● HW-specific license constraints (such as per CPU)
+● 32-bitOS
+● File servers
+● VM-based workloads that would require whole-node capacity, such as
+high-performance, high-memory databases (SAP HANA)
+● Single-instance workloads that rely on Compute Engine live migration to meet
+high availability requirements
+
+
+### StratoZone 
+
+### Migration setup and planning
+
+1. Discovery & assessment
+
+● What applications do I have running?
+● What are the best candidates for migration?
+
+Stratozone
+Fit report
+
+2. Setup & planning
+● Where will I run my migrated applications?
+● How can I scale my migration process?
+
+Migration plan (yaml)
+
+3. Migrate & modernize
+● How do I perform an actual migration?
+● What if I need to modify or customize a migrated application?
+ 
+ Docker file
+ Deployment yaml
+ Data volumes
+ 
+4. Optimize
+How do I handle the ongoing maintenance or upgrades of a migrated application?
+
+ 
+Steps to assess a workload with the fit assessment tool
+  1.
+Use ssh to connect to the VM, and download the tool:
+curl -O
+https://anthos-migrate-release.storage.googleapis.com/v1.10.2/linux/amd64/mfit-linux- collect.sh
+curl -O https://anthos-migrate-release.storage.googleapis.com/v1.10.2/linux/amd64/mfit
+  2. ./mfit-linux-collect.sh
+Collect machine information in a downloadable tar file:
+  3. Create an assessment report in an HTML, JSON, or CSV file:
+./mfit assess sample m4a-collect.tar --format json > monolith-mfit-report.json
+ 
+ add migration source
+ migctl source create local-vmware local-vmware-src \ --vc '1.2.3.4' \
+--username 'admin'
+
+create a migration plan
+migctl migration create my-migration \ --source local-vmware-src \
+--vm-id My_VMware_VM \
+--intent Image
+ 
+ customize plan
+ migctl migration get my-migration
+ 
+ generate container
+ migctl migration generate- artifacts my-migration
+ 
+ deploy GKE
+  kubectl apply -f app.yaml
+  
+### CI/CD
+
+Google Build can build and test code.
+
+``` cloudbuild.yaml
+steps:
+- name: 'gcr.io/cloud-builders/npm'
+args: ['install']
+- name: 'gcr.io/cloud-builders/npm'
+args: [test']
+- name: 'gcr.io/cloud-builders/docker'
+args: ['build', '-t', 'gcr.io/$PROJECT_ID/helloworld', '.'] - name: 'gcr.io/cloud-builders/docker'
+args: ['push', 'gcr.io/$PROJECT_ID/helloworld']
+```
+ 
+ 
+ ### Google Cloud deply 
+ When you use Google Cloud Deploy, you can deploy a container to any of the supported compute platforms that are compatible with your containerized application.
+
+Google Cloud Deploy integrates with various compute platforms in GCP such as Google Kubernetes Engine (GKE), App Engine flexible environment, Compute Engine, and Cloud Run.
+Fully managed service
+
+```
+steps:
+- name: 'gcr.io/cloud-builders/npm'
+args: ['install']
+- name: 'gcr.io/cloud-builders/npm'
+args: [test']
+- name: 'gcr.io/cloud-builders/docker'
+args: ['build', '-t', 'gcr.io/$PROJECT_ID/helloworld', '.'] - name: 'gcr.io/cloud-builders/docker'
+args: ['push', 'gcr.io/$PROJECT_ID/helloworld'] - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+entrypoint: gcloud args: [
+        "beta", "deploy", "releases", "create", "rel-\${SHORT_SHA}",
+        "--delivery-pipeline", "helloworld-pipeline",
+        "--region", "us-central1",
+        "--annotations", "commitId=\${REVISION_ID}",
+        "--images", "helloworld=gcr.io/$PROJECT_ID/helloworld"
+        ]
+
+ ```
+ 
