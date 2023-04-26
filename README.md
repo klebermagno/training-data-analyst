@@ -279,6 +279,41 @@ for i in {1..10}; do curl $TEST1_PRODUCT_SERVICE_URL/help -w "\n"; done
 * A/B testing: Version B is released to a subset of users under specific condition.
 * Shadow: Version B receives real-world traffic alongside version A and doesn’t impact the response.
 
+## Knative
+
+
+## Clud Run
+ Cloud Run is based on open-source Knative Serving, which makes apps more portable.
+ 
+●  Rapid deployment of serverless applications.
+● Automatic scaling up to support millions of requests and down to zero instances to reduce consumption when it’s not needed.
+● Routing and network programming for applications.
+● Point-in-time snapshots of deployed code and configurations that simplify managing rollouts and rollbacks.
+● Cloud Run offers a stable HTTPS endpoint with TLS termination handled for you, and the option to map your services to your own domains.
+● Cloud Run abstracts away all infrastructure management by automatically scaling up and down from zero almost instantaneously, depending on traffic. Cloud Run only charges you for the exact resources you use.
+● Local emulator available in gcloud, Cloud Code
+● Use a single command to build, push, and deploy.  The command “gcloud run deploy” uses either your Dockerfile or buildpacks as the source to build your container
+● Cloud Run is a regional resource, replicated across zones.
+● Projects might contain multiple Services tied to different regions.
+● Google Load Balancing is used to scale globally using a serverless network endpoint group.
+● Google Load Balancer integrates with other services, such as Google Cloud Armor, Cloud DNS, and Cloud CDN.
+
+### Cloud Run for Anthos offers the same serverless experience that you get with Cloud Run. 
+ 
+```
+apiVersion: serving.knative.dev/v1 kind: Service
+metadata:
+name: helloworld-go
+namespace: default spec:
+ template:
+  spec:
+containers:
+- image: gcr.io/knative-samples/helloworld-go
+env:
+- name: TARGET
+value: "Go Sample v1"
+ 
+```
 ## Kubernets
 
 
