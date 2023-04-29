@@ -316,6 +316,16 @@ value: "Go Sample v1"
 ```
 ## Kubernets
 
+## Architecture
+
+* Control plane: main part of the server with:
+  * etcd
+  * kube-scheduler: responsible for scheduling 
+  * kube-cloud-manager: controllers that interact with underlying cloud providers. bringing in Google Cloud features like load balancers and storage volumes
+  * kube-controller-manager: monitor state of the cluster
+* Node  
+
+Default configuration 1 control plane and 3 notes per zone. Multiples zones multiply this.
 
 ## Security 
 On Google Kubernetes Engine (GKE) is recommended to use *Workload Identity*. Use gcloud to bind the Google service accounts and the Kubernetes service accounts using roles/iam.workloadIdentityUser.
