@@ -323,7 +323,7 @@ value: "Go Sample v1"
   * kube-scheduler: responsible for scheduling 
   * kube-cloud-manager: controllers that interact with underlying cloud providers. bringing in Google Cloud features like load balancers and storage volumes
   * kube-controller-manager: monitor state of the cluster
-* Node  
+* Node: Use kubelet agent   
 
 Default configuration 1 control plane and 3 notes per zone. Multiples zones multiply this.
 
